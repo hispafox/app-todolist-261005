@@ -21,6 +21,7 @@ El objetivo principal es mantener una solución simple, clara y fácil de seguir
 - Usa nombres descriptivos y consistentes en español o en el idioma que ya esté establecido en el proyecto.
 - Cuando haya varias soluciones válidas, elige la más directa y menos frágil.
 - No introduzcas overengineering para una app de esta escala.
+- Para la creación y publicación del repositorio, usa GitHub CLI (`gh`) siempre que sea posible: `gh auth login`, `gh auth status`, `gh repo create`, `gh repo view` y `gh repo set-default` para mantener el flujo de trabajo consistente con GitHub.
 
 ## Idioma y estilo de respuesta
 
@@ -104,6 +105,8 @@ La estructura debe ser clara y predecible, sin introducir capas innecesarias.
 - Nunca subas secretos, claves, tokens, cadenas de conexión ni archivos `.env` con datos sensibles.
 - No hagas suposiciones de seguridad que no sean necesarias para un proyecto de aprendizaje.
 - Si se requiere autenticación o autorización, impleméntala de forma mínima y explícita.
+- Cuando el flujo del proyecto implique crear o publicar un repositorio, usa la GitHub CLI (`gh`) para autenticar y validar la conexión antes de hacer push o crear repositorios remotos.
+- Recomendación de uso: `gh auth login` para iniciar sesión, `gh auth status` para comprobar autenticación y `gh repo create` para generar repositorios públicos o privados según corresponda.
 
 ## Reglas de contribución
 
