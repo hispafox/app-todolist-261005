@@ -218,3 +218,22 @@ Content-Type: application/json
 - Código limpio y mantenible para practicar con Copilot
 
 ## Posibles mejoras futuras
+
+- Autenticación y autorización
+- Filtros por estado de tarea
+- Ordenado por prioridad o fecha
+- Cambiar la base de datos a PostgreSQL o MySQL
+- Añadir tests unitarios e integración
+- Mejorar la UI con estilos personalizados
+
+## Conclusión
+
+Este proyecto es un ejemplo práctico de una aplicación moderna de lista de tareas que combina backend robusto, base de datos relacional y frontend dinámico. Sirve como base ideal para aprender arquitectura de software, buenas prácticas de desarrollo y uso de GitHub Copilot como asistente de programación.
+
+## Documentación del producto
+
+El PRD de la aplicación está disponible en [docs/PRD.md](docs/PRD.md).
+
+## Licencia
+
+Este proyecto se puede usar como base educativa. Si lo adaptas o lo compartes, te recomendamos mantener la referencia al original y documentar los cambios realizados.
