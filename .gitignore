@@ -1,0 +1,17 @@
+# .NET
+bin/
+obj/
+.vs/
+*.user
+
+# SQLite local
+*.db
+*.db-shm
+*.db-wal
+
+# Configuración local del lanzador
+.devlauncher/
+
+# Python
+__pycache__/
+*.pyc
