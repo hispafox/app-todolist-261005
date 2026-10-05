@@ -23,6 +23,7 @@ El objetivo principal es mantener una solución simple, clara y fácil de seguir
 - No introduzcas overengineering para una app de esta escala.
 - Para la creación y publicación del repositorio, usa GitHub CLI (`gh`) siempre que sea posible: `gh auth login`, `gh auth status`, `gh repo create`, `gh repo view` y `gh repo set-default` para mantener el flujo de trabajo consistente con GitHub.
 
+
 ## Idioma y estilo de respuesta
 
 - Responde siempre en español si no se indica lo contrario.
