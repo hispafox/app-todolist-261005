@@ -1,11 +1,11 @@
-# Todo App con .NET 10, SQLite y React
+# Todo App con .NET 10, SQLite y React + TypeScript
 
 Este proyecto es una aplicación full-stack de lista de tareas diseñada para demostrar el uso de GitHub Copilot en un entorno moderno de desarrollo. La solución combina:
 
 - Backend en .NET 10 con ASP.NET Core Web API
 - Base de datos SQLite
 - Entity Framework Core para acceso a datos
-- Frontend en React con Vite
+- Frontend en React + TypeScript con Vite
 - Arquitectura simple y escalable para aprender conceptos reales de desarrollo
 
 ## Objetivo
@@ -27,11 +27,12 @@ Es una base muy útil para practicar integración entre frontend y backend, mane
 - Entity Framework Core
 - SQLite
 - React
+- TypeScript
 - Vite
 - C#
-- JavaScript / JSX
+- TSX / TypeScript
 
-## Estructura recomendada del proyecto
+## Estructura del proyecto
 
 ```text
 app-todolist/
@@ -39,20 +40,24 @@ app-todolist/
 │   ├── TodoApi/
 │   │   ├── Controllers/
 │   │   ├── Data/
+│   │   ├── Migrations/
 │   │   ├── Models/
+│   │   ├── Properties/
 │   │   ├── appsettings.json
 │   │   ├── Program.cs
 │   │   └── TodoApi.csproj
 │   └── TodoApi.sln
 ├── frontend/
 │   ├── src/
-│   ├── public/
+│   ├── index.html
 │   ├── package.json
-│   ├── vite.config.js
-│   └── index.html
-├── database/
-│   └── app.db
-└── README.md
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   ├── vite.config.ts
+│   └── README.md
+├── README.md
+└── labs/
+    └── ...
 ```
 
 ## Funcionalidades principales
@@ -112,12 +117,12 @@ dotnet ef database update
 
 ## Configuración del frontend
 
-1. Crea la aplicación React:
+1. Crea la aplicación React con TypeScript:
 
 ```bash
 cd ../..
 cd frontend
-npm create vite@latest . -- --template react
+npm create vite@latest . -- --template react-ts
 ```
 
 2. Instala dependencias:
@@ -126,7 +131,7 @@ npm create vite@latest . -- --template react
 npm install
 ```
 
-3. Instala Axios para consumir la API:
+3. Instala Axios para consumir la API si se necesita:
 
 ```bash
 npm install axios
@@ -141,17 +146,18 @@ cd backend/TodoApi
 dotnet run
 ```
 
-La API quedará disponible por defecto en una URL similar a:
+La API queda disponible en:
 
 ```text
-https://localhost:5001
-http://localhost:5000
+http://localhost:5062
+https://localhost:7250
 ```
 
 ### Frontend
 
 ```bash
 cd frontend
+npm install
 npm run dev
 ```
 
@@ -160,6 +166,8 @@ El frontend estará disponible en:
 ```text
 http://localhost:5173
 ```
+
+El proxy de Vite redirige las peticiones `/api` al backend en `http://localhost:5062`.
 
 ## Modelo de datos
 
@@ -216,6 +224,7 @@ Content-Type: application/json
 - Uso de migraciones para versionar el esquema
 - Comunicación segura entre frontend y API
 - Código limpio y mantenible para practicar con Copilot
+- Frontend tipado con TypeScript para mejorar seguridad y mantenibilidad
 
 ## Posibles mejoras futuras
 

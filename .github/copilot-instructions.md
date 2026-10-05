@@ -8,8 +8,8 @@ Este repositorio es una aplicación de lista de tareas (to-do app) construida co
 - ASP.NET Core Web API
 - Entity Framework Core
 - SQLite
-- React + Vite
-- JavaScript / JSX
+- React + TypeScript + Vite
+- TypeScript / TSX
 
 El objetivo principal es mantener una solución simple, clara y fácil de seguir para aprender y desarrollar con GitHub Copilot sin introducir complejidad innecesaria.
 
@@ -51,12 +51,13 @@ El objetivo principal es mantener una solución simple, clara y fácil de seguir
 - Mantén el modelo de datos simple: `Id`, `Title`, `IsCompleted`, `CreatedAt` (o equivalente).
 - Al crear migraciones, sigue la estructura del proyecto y no mezcles cambios no relacionados.
 
-## Convenciones del frontend (React + Vite)
+## Convenciones del frontend (React + TypeScript + Vite)
 
-- Usa componentes funcionales con hooks.
+- Usa componentes funcionales con hooks y tipado explícito en TypeScript.
 - Mantén las partes de UI separadas por responsabilidad.
 - Nombrea los componentes con PascalCase y los archivos con nombre descriptivo.
-- Usa `useState`, `useEffect` y patrones simples para manejar el estado local.
+- Usa `useState`, `useEffect` y patrones simples para manejar el estado local con tipos adecuados.
+- Define interfaces o tipos para los datos de tareas y las respuestas de la API.
 - Las llamadas a la API deben hacerse de forma consistente, preferiblemente con `fetch` o `axios`.
 - Mantén los datos del formulario y de la lista en un flujo sencillo y fácil de depurar.
 - Evita dependencias pesadas si una solución nativa es suficiente.
@@ -120,12 +121,13 @@ La estructura debe ser clara y predecible, sin introducir capas innecesarias.
 
 Cuando trabajes en este repositorio, GitHub Copilot debería:
 
-- sugerir soluciones alineadas con .NET 10 + React + SQLite
+- sugerir soluciones alineadas con .NET 10 + React + TypeScript + SQLite
 - mantener la app simple y práctica
 - evitar complejidades no requeridas
 - respetar el idioma del proyecto y la estructura del repositorio
 - sugerir cambios coherentes entre backend y frontend
 - preferir buenas prácticas reales pero sin sobre-diseñar
+- mantener el frontend en TypeScript y evitar patrones JavaScript sin tipado cuando sea posible
 
 ## Resumen breve
 
