@@ -90,6 +90,8 @@ El MVP incluye:
 - marcado como completada;
 - edición de título o contenido;
 - eliminación de tareas;
+- creación y mantenimiento de categorías reutilizables;
+- asignación opcional de una categoría a cada tarea;
 - persistencia en SQLite;
 - API REST para consumir la información desde el frontend;
 - interfaz web básica con React.
@@ -122,6 +124,7 @@ El usuario puede ver todas las tareas registradas.
 Criterios de aceptación:
 - la lista se carga desde la API;
 - cada tarea muestra su estado actual;
+- cada tarea muestra su categoría cuando tenga una asignada;
 - la información se presenta de forma legible.
 
 ### RF-03: Marcar tarea como completada
@@ -164,6 +167,16 @@ Criterios de aceptación:
 - los errores de red o del servidor se gestionan de forma visible para el usuario;
 - la experiencia de uso no rompe la interacción si falla una operación.
 
+### RF-08: Gestionar categorías de tareas
+El usuario puede crear, consultar, renombrar y eliminar categorías reutilizables, y asignar o quitar una categoría al crear o editar una tarea.
+
+Criterios de aceptación:
+- el nombre de categoría es obligatorio, se guarda sin espacios exteriores y no puede duplicarse aunque cambien las mayúsculas;
+- una tarea puede no tener categoría o estar asociada a una categoría existente;
+- las tareas muestran la categoría asignada cuando exista;
+- no se puede eliminar una categoría mientras tenga tareas asociadas y la interfaz comunica el motivo;
+- la creación, edición y eliminación de categorías se persiste en SQLite.
+
 ## 8. Historias de usuario
 
 ### HU-01: Crear una tarea nueva
@@ -181,11 +194,17 @@ Como usuario quiero editar una tarea si cambió su descripción o su estado.
 ### HU-05: Eliminar una tarea equivocada
 Como usuario quiero borrar tareas que ya no necesito para mantener mi lista ordenada.
 
+### HU-06: Organizar tareas por categorías
+Como usuario quiero administrar categorías y asignarlas opcionalmente a mis tareas para encontrar y organizar mejor mis actividades.
+
 ## 9. Reglas de negocio
 
 - todo dato obligatorio debe validarse antes de guardarse;
 - una tarea debe tener al menos un identificador único y un contenido mínimo válido;
 - una tarea puede estar en estado pendiente o completada;
+- una tarea puede no tener categoría o pertenecer a una única categoría existente;
+- el nombre de cada categoría debe ser obligatorio y único sin distinguir mayúsculas ni espacios exteriores;
+- no se puede eliminar una categoría que tenga tareas asociadas;
 - la eliminación debe ser persistente y visible en la UI;
 - la base de datos debe mantener integridad de datos por medio de modelos y migraciones;
 - la aplicación debe operar sin necesidad de infraestructura externa compleja.
@@ -199,7 +218,7 @@ La interfaz debe ser:
 - accesible a nivel básico;
 - responsiva para diferentes tamaños de pantalla.
 
-La interacción primaria debe centrarse en cuatro acciones rápidas: crear, completar, editar y eliminar. La experiencia debe permitir que un usuario sin experiencia previa comprenda el flujo en pocos segundos.
+La interacción primaria debe centrarse en crear, completar, editar y eliminar tareas, con una selección sencilla de categoría. La gestión de categorías debe ser accesible sin recargar la lista de tareas.
 
 ## 11. Modelo de datos
 
@@ -212,6 +231,15 @@ public class TodoItem
     public string Title { get; set; } = string.Empty;
     public bool IsCompleted { get; set; }
     public DateTime CreatedAt { get; set; }
+    public int? CategoryId { get; set; }
+    public TodoCategory? Category { get; set; }
+}
+
+public class TodoCategory
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public ICollection<TodoItem> TodoItems { get; set; } = [];
 }
 ```
 
@@ -221,10 +249,12 @@ public class TodoItem
 - Title: nombre o descripción breve de la tarea;
 - IsCompleted: estado de la tarea;
 - CreatedAt: fecha de registro.
+- CategoryId: referencia opcional a la categoría;
+- TodoCategory.Name: nombre obligatorio y único de la categoría.
 
 ## 12. API REST propuesta
 
-La API podría exponer los siguientes endpoints:
+La API expone los endpoints de tareas existentes y añade la gestión de categorías:
 
 ```http
 GET /api/todos
@@ -232,6 +262,11 @@ GET /api/todos/{id}
 POST /api/todos
 PUT /api/todos/{id}
 DELETE /api/todos/{id}
+GET /api/categories
+GET /api/categories/{id}
+POST /api/categories
+PUT /api/categories/{id}
+DELETE /api/categories/{id}
 ```
 
 ### Ejemplos
@@ -248,9 +283,12 @@ Content-Type: application/json
 
 {
   "title": "Terminar el proyecto final",
-  "isCompleted": false
+  "isCompleted": false,
+  "categoryId": 1
 }
 ```
+
+`categoryId` puede omitirse o ser `null` para crear una tarea sin categoría. La actualización permite asignar otra categoría o enviar `null` para quitar la asignación. No se permite borrar categorías que todavía tengan tareas asociadas (409 Conflict).
 
 #### Actualizar tarea
 ```http
@@ -356,6 +394,7 @@ La solución se considera exitosa si:
 - mejora de validaciones
 
 ### Fase 4: Evolución
+- filtros por categoría
 - filtros por estado
 - ordenamiento por fecha o prioridad
 - autenticación de usuarios

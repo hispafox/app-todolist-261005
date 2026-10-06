@@ -1,6 +1,6 @@
 ---
 name: project-audit
-description: Revisa el estado general del proyecto para detectar inconsistencias, desajustes técnicos, deuda de configuración, problemas de arquitectura y desviaciones respecto a la especificación del repositorio y al stack acordado.
+description: Revisa el estado general del proyecto para detectar inconsistencias, code smells, desajustes técnicos, deuda de configuración, problemas de arquitectura y desviaciones respecto a la especificación del repositorio y al stack acordado.
 ---
 
 # Auditoría general del proyecto
@@ -10,6 +10,7 @@ Usa este skill cuando necesites:
 - revisar si el proyecto cumple la especificación acordada;
 - detectar inconsistencias entre documentación, configuración y código;
 - identificar deuda técnica o desalineaciones de stack;
+- detectar code smells que dificulten la comprensión, el cambio o la evolución del código;
 - comprobar si el repositorio está construido según el enfoque definido por el equipo;
 - evaluar el estado general del proyecto antes de continuar con cambios o nuevas funcionalidades;
 - confirmar si el proyecto está usando correctamente el frontend y el backend esperados.
@@ -32,7 +33,8 @@ Sí incluye:
 - análisis de dependencias, scripts y configuración;
 - revisión de la estructura del repositorio y de los artefactos generados;
 - detección de deuda técnica, configuraciones incompletas o desalineadas;
-- evaluación de si la implementación refleja las decisiones de diseño del proyecto.
+- evaluación de si la implementación refleja las decisiones de diseño del proyecto;
+- detección de code smells relevantes en el código de las distintas capas.
 
 No incluye:
 
@@ -84,6 +86,22 @@ El auditor debe revisar, al menos, estos aspectos:
 - Dependencias obsoletas, redundantes o innecesarias.
 - Archivos de ejemplo, documentación genérica o plantillas que no reflejan la app real.
 - Inconsistencias entre lo que la documentación dice y lo que el repo contiene.
+- Code smells que aumenten el acoplamiento, la duplicación o la complejidad sin aportar valor.
+
+### 7) Code smells y mantenibilidad
+
+Revisar el código de frontend y backend buscando señales concretas de que sea difícil de entender, probar o modificar, por ejemplo:
+
+- lógica duplicada o reglas de negocio repetidas en varias capas;
+- métodos, componentes o clases con demasiadas responsabilidades o complejidad;
+- condicionales anidados o flujos de control innecesariamente difíciles de seguir;
+- acoplamiento excesivo o dependencias entre capas que dificulten cambios localizados;
+- estado, parámetros o modelos que transporten más información de la necesaria;
+- código muerto, rutas inalcanzables o comentarios que contradigan la implementación;
+- nombres, valores mágicos o estructuras que oculten la intención del código;
+- abstracciones o configuraciones innecesarias para la escala y necesidades reales del proyecto.
+
+No etiquetar como smell una decisión solo por preferencia de estilo o por no seguir un patrón. Considerar el contexto y la escala de la aplicación, y reportar únicamente casos observables con evidencia y un impacto plausible en comprensión, corrección o facilidad de cambio.
 
 ## Método de auditoría
 
@@ -92,8 +110,9 @@ El auditor debe revisar, al menos, estos aspectos:
 3. Validar si el stack real coincide con el stack deseado.
 4. Buscar incoherencias entre archivos clave (README, package.json, configs, código principal).
 5. Evaluar si la arquitectura general y la organización del repositorio son consistentes.
-6. Identificar riesgos, deuda técnica y elementos a corregir antes de continuar.
-7. Entregar un resumen claro con hallazgos y recomendación.
+6. Revisar código representativo de cada capa para identificar code smells con evidencia concreta.
+7. Identificar riesgos, deuda técnica y elementos a corregir antes de continuar.
+8. Entregar un resumen claro con hallazgos y recomendación, priorizando los smells por impacto.
 
 ## Salida esperada
 
@@ -102,6 +121,7 @@ La auditoría debe entregar, como mínimo:
 - resumen ejecutivo del estado general del proyecto;
 - lista de inconsistencias detectadas;
 - hallazgos de configuración y documentación;
+- code smells relevantes, indicando ubicación, evidencia, impacto y recomendación;
 - riesgos o deuda técnica relevante;
 - recomendaciones concretas priorizadas;
 - declaración de si el proyecto está alineado con la intención del stack y de la especificación.
@@ -119,6 +139,9 @@ Hallazgos principales:
 
 Riesgos:
 - ...
+
+Code smells:
+- [prioridad] [ubicación]: [evidencia y efecto] → [recomendación]
 
 Recomendaciones:
 1. ...
@@ -148,6 +171,10 @@ La auditoría debe apoyarse en archivos reales de configuración, código y docu
 
 Aunque el proyecto use una tecnología concreta, no conviertas la auditoría en una revisión solo de una librería o de un detalle puntual.
 
+### Regla 6: reportar code smells con contexto
+
+No presentar preferencias personales como defectos. Cada smell reportado debe señalar dónde aparece, qué evidencia lo sustenta y cómo afecta al mantenimiento; recomendar un cambio proporcional y no ejecutar refactors automáticamente.
+
 ## Resultado esperado para este repositorio
 
 En este proyecto se debe comprobar especialmente:
@@ -156,4 +183,5 @@ En este proyecto se debe comprobar especialmente:
 - que el repositorio no contenga un stack mezclado o inconsistencias entre JavaScript y TypeScript;
 - que la estructura general del backend y frontend siga siendo coherente y útil para el desarrollo;
 - que no exista deuda técnica o archivos de plantilla que confundan la intención del proyecto;
+- que no haya code smells relevantes que compliquen innecesariamente la lógica o futuros cambios;
 - que la solución general esté preparada para continuar desarrollándose de forma limpia.

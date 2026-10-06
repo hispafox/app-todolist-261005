@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Data;
+using TodoApi.Dtos;
 using TodoApi.Models;
 using TodoApi.Services;
 using Xunit;
@@ -68,10 +69,10 @@ public class TodoServiceTests
         await using var db = CreateDbContext();
         var service = new TodoService(db);
 
-        var result = await service.CreateAsync(new TodoItem { Title = "   " });
+        var result = await service.CreateAsync(new TodoRequest("   "));
 
         result.Success.Should().BeFalse();
-        result.ErrorMessage.Should().Be("Title is required.");
+        result.ErrorMessage.Should().Be("El título es obligatorio.");
         result.Todo.Should().BeNull();
         db.TodoItems.Should().BeEmpty();
     }
@@ -83,12 +84,7 @@ public class TodoServiceTests
         var service = new TodoService(db);
 
         var createdAt = new DateTime(2024, 1, 2, 3, 4, 5, DateTimeKind.Utc);
-        var result = await service.CreateAsync(new TodoItem
-        {
-            Title = "  Buy milk  ",
-            IsCompleted = true,
-            CreatedAt = createdAt
-        });
+        var result = await service.CreateAsync(new TodoRequest("  Buy milk  ", true, CreatedAt: createdAt));
 
         result.Success.Should().BeTrue();
         result.Todo.Should().NotBeNull();
@@ -105,7 +101,7 @@ public class TodoServiceTests
         var service = new TodoService(db);
 
         var before = DateTime.UtcNow;
-        var result = await service.CreateAsync(new TodoItem { Title = "Write tests" });
+        var result = await service.CreateAsync(new TodoRequest("Write tests"));
         var after = DateTime.UtcNow;
 
         result.Success.Should().BeTrue();
@@ -123,7 +119,7 @@ public class TodoServiceTests
         db.TodoItems.Add(todo);
         await db.SaveChangesAsync();
 
-        var result = await service.UpdateAsync(todo.Id, new TodoItem { Title = "  New title  ", IsCompleted = true });
+        var result = await service.UpdateAsync(todo.Id, new TodoRequest("  New title  ", true));
 
         result.Success.Should().BeTrue();
         result.Todo.Should().NotBeNull();
@@ -138,7 +134,7 @@ public class TodoServiceTests
         await using var db = CreateDbContext();
         var service = new TodoService(db);
 
-        var result = await service.UpdateAsync(123, new TodoItem { Title = "Updated" });
+        var result = await service.UpdateAsync(123, new TodoRequest("Updated"));
 
         result.Success.Should().BeFalse();
         result.Todo.Should().BeNull();
@@ -155,10 +151,10 @@ public class TodoServiceTests
         db.TodoItems.Add(todo);
         await db.SaveChangesAsync();
 
-        var result = await service.UpdateAsync(todo.Id, new TodoItem { Title = "   ", IsCompleted = true });
+        var result = await service.UpdateAsync(todo.Id, new TodoRequest("   ", true));
 
         result.Success.Should().BeFalse();
-        result.ErrorMessage.Should().Be("Title is required.");
+        result.ErrorMessage.Should().Be("El título es obligatorio.");
         db.TodoItems.Single(item => item.Id == todo.Id).Title.Should().Be("Original");
         db.TodoItems.Single(item => item.Id == todo.Id).IsCompleted.Should().BeFalse();
     }
@@ -191,6 +187,70 @@ public class TodoServiceTests
     }
 
     [Fact]
+    public async Task CreateCategoryAsync_TrimsNameAndRejectsDuplicatesIgnoringCase()
+    {
+        await using var db = CreateDbContext();
+        var service = new TodoService(db);
+
+        var created = await service.CreateCategoryAsync("  Work  ");
+        var duplicate = await service.CreateCategoryAsync("work");
+
+        created.Success.Should().BeTrue();
+        created.Category!.Name.Should().Be("Work");
+        duplicate.Success.Should().BeFalse();
+        duplicate.ErrorMessage.Should().Be(TodoService.DuplicateCategoryNameError);
+        db.TodoCategories.Should().ContainSingle();
+    }
+
+    [Fact]
+    public async Task CreateAsync_WhenCategoryDoesNotExist_ReturnsValidationError()
+    {
+        await using var db = CreateDbContext();
+        var service = new TodoService(db);
+
+        var result = await service.CreateAsync(new TodoRequest("Task", CategoryId: 999));
+
+        result.Success.Should().BeFalse();
+        result.ErrorMessage.Should().NotBeNull();
+        db.TodoItems.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task UpdateAsync_AssignsCategoryAndDeleteCategoryIsBlockedWhileInUse()
+    {
+        await using var db = CreateDbContext();
+        var service = new TodoService(db);
+        var categoryResult = await service.CreateCategoryAsync("Work");
+        var todo = new TodoItem { Title = "Task" };
+        db.TodoItems.Add(todo);
+        await db.SaveChangesAsync();
+
+        var updated = await service.UpdateAsync(todo.Id, new TodoRequest("Task", CategoryId: categoryResult.Category!.Id));
+        var deleted = await service.DeleteCategoryAsync(categoryResult.Category.Id);
+
+        updated.Success.Should().BeTrue();
+        updated.Todo!.CategoryId.Should().Be(categoryResult.Category.Id);
+        updated.Todo.Category!.Name.Should().Be("Work");
+        deleted.Exists.Should().BeTrue();
+        deleted.InUse.Should().BeTrue();
+        db.TodoCategories.Should().ContainSingle();
+    }
+
+    [Fact]
+    public async Task DeleteCategoryAsync_WhenUnused_RemovesCategory()
+    {
+        await using var db = CreateDbContext();
+        var service = new TodoService(db);
+        var category = await service.CreateCategoryAsync("Work");
+
+        var result = await service.DeleteCategoryAsync(category.Category!.Id);
+
+        result.Exists.Should().BeTrue();
+        result.InUse.Should().BeFalse();
+        db.TodoCategories.Should().BeEmpty();
+    }
+
+    [Fact]
     public void NormalizeTitle_WhenInputIsNullOrWhiteSpace_ReturnsNull()
     {
         TodoService.NormalizeTitle(null).Should().BeNull();
@@ -202,5 +262,12 @@ public class TodoServiceTests
     public void NormalizeTitle_WhenTitleHasWhitespace_TrimsIt()
     {
         TodoService.NormalizeTitle("  Finish sprint  ").Should().Be("Finish sprint");
+    }
+
+    [Fact]
+    public void NormalizeCategoryName_WhenNameIsBlank_ReturnsNull()
+    {
+        TodoService.NormalizeCategoryName("  ").Should().BeNull();
+        TodoService.NormalizeCategoryName(" Work ").Should().Be("Work");
     }
 }

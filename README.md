@@ -16,6 +16,7 @@ El objetivo de esta app es permitir:
 - Marcar tareas como completadas
 - Editar tareas
 - Eliminar tareas
+- Organizar tareas con categorías opcionales
 - Consultar la lista de tareas desde una interfaz web
 
 Es una base muy útil para practicar integración entre frontend y backend, manejo de persistencia, migraciones y despliegue local.
@@ -169,43 +170,9 @@ http://localhost:5173
 
 El proxy de Vite redirige las peticiones `/api` al backend en `http://localhost:5062`.
 
-## Modelo de datos
+## Modelo de datos y API
 
-Una tarea puede tener una estructura similar a esta:
-
-```csharp
-public class TodoItem
-{
-    public int Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-    public bool IsCompleted { get; set; }
-    public DateTime CreatedAt { get; set; }
-}
-```
-
-## Endpoints de ejemplo
-
-La API podría exponer endpoints como:
-
-```http
-GET /api/todos
-GET /api/todos/{id}
-POST /api/todos
-PUT /api/todos/{id}
-DELETE /api/todos/{id}
-```
-
-Ejemplo de creación de una tarea:
-
-```http
-POST /api/todos
-Content-Type: application/json
-
-{
-  "title": "Terminar el proyecto final",
-  "isCompleted": false
-}
-```
+El modelo de tareas, categorías, contratos de la API, requisitos funcionales y decisiones de diseño se mantienen en un único documento: [docs/analisis-diseño.md](docs/analisis-diseño.md).
 
 ## Flujo de trabajo recomendado
 
@@ -241,7 +208,7 @@ Este proyecto es un ejemplo práctico de una aplicación moderna de lista de tar
 
 ## Documentación del producto
 
-El PRD de la aplicación está disponible en [docs/PRD.md](docs/PRD.md).
+El análisis, diseño y requisitos consolidados de la aplicación están en [docs/analisis-diseño.md](docs/analisis-diseño.md). Los documentos fuente anteriores se conservan en [docs/archivo/](docs/archivo/).
 
 ### Manual de usuario en Word
 
