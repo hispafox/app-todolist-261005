@@ -243,6 +243,12 @@ Este proyecto es un ejemplo práctico de una aplicación moderna de lista de tar
 
 El PRD de la aplicación está disponible en [docs/PRD.md](docs/PRD.md).
 
+### Manual de usuario en Word
+
+El skill [manual-usuario](.github/skills/manual-usuario/SKILL.md) automatiza la creación o actualización del manual en español, basándose en las funcionalidades realmente implementadas y reutilizando el skill [docx](.github/skills/docx/SKILL.md).
+
+Para ejecutarlo, pide a Copilot: «Usa manual-usuario para crear el manual de la aplicación en Word». La salida predeterminada es `docs/manual-usuario.docx`; también puedes indicar otra ruta. El flujo incluye comprobación del contenido y validación del documento generado.
+
 ## Licencia
 
 Este proyecto se puede usar como base educativa. Si lo adaptas o lo compartes, te recomendamos mantener la referencia al original y documentar los cambios realizados.
