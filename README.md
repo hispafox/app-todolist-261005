@@ -88,6 +88,15 @@ Necesita GitHub CLI (`gh`) autenticada y permisos para crear issues (y metadatos
 - C#
 - TSX / TypeScript
 
+## Integración continua (GitHub Actions)
+
+El repositorio incluye un flujo de trabajo de integración continua en [.github/workflows/ci.yml](.github/workflows/ci.yml) que se ejecuta en cada `push` y `pull_request` sobre `main`. No realiza despliegue; solo compila y prueba:
+
+- **Backend:** restaura, compila (`Release`) y ejecuta los tests de `backend/TodoApi.Tests` con .NET 10.
+- **Frontend:** instala dependencias (`npm ci`), pasa el linter (`npm run lint`) y compila (`npm run build`).
+
+Puedes ver el resultado en la pestaña **Actions** del repositorio en GitHub.
+
 ## Estructura del proyecto
 
 ```text
