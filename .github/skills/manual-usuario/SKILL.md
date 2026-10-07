@@ -71,6 +71,7 @@ Advertir antes de las acciones destructivas. No recomendar borrar la base de dat
 
 Incluir capturas solo cuando se puedan obtener de la aplicación real o hayan sido proporcionadas por el usuario.
 
+- Fuente estándar: `docs/capturas/`, generada por el agente de QA (`qa-apptodolist`) al ejecutar la suite E2E de Playwright. Si la carpeta no existe o está desactualizada, solicitar su regeneración antes de insertar imágenes.
 - Usar datos ficticios y evitar secretos, información personal y rutas locales sensibles.
 - Añadir pie descriptivo y texto alternativo a cada captura.
 - Mantener la proporción y ajustar las imágenes al ancho útil de la página.
@@ -90,7 +91,8 @@ Formato predeterminado:
 - Encabezados reales de Word para navegación e índice.
 - Listas numeradas nativas, no números o viñetas dibujados manualmente.
 - Pie de página con numeración y encabezado discreto con el nombre de la aplicación.
-- Tablas solo cuando ayuden, con anchos coherentes y cabecera reconocible.
+- Usar tablas solo cuando ayuden. Ajustar siempre su ancho total al ancho útil de página; fijar anchos de columnas y celdas coherentes, permitir que el texto se ajuste dentro de ellas y usar una cabecera reconocible. No dejar que ninguna columna sobresalga del margen imprimible.
+- Evitar alturas fijas que corten contenido. Mantener cada fila unida al paginar y repetir la fila de encabezado cuando una tabla continúe en otra página. Evitar que una única fila quede aislada en la página siguiente: ajustar el texto o, si hace falta, iniciar la sección que contiene la tabla en una página nueva. No dejar una tabla partida de forma que solo repita la cabecera y continúe con una fila.
 
 Reutilizar herramientas disponibles. Si faltan dependencias, instalarlas de forma aislada para la generación documental, sin añadirlas al frontend ni cambiar los manifiestos de la aplicación. Guardar scripts auxiliares y archivos temporales fuera del código de la app, en el espacio temporal de la sesión.
 
@@ -103,6 +105,7 @@ Antes de dar por terminado el trabajo:
 - Ejecutar el validador indicado por `docx` sobre el archivo final y corregir los errores.
 - Extraer o leer el contenido del `.docx` generado y comprobar todas las secciones y procedimientos frente a las funciones verificadas.
 - Comprobar portada, idioma, títulos, listas, índice, pies, tablas e imágenes. Si hay herramientas de renderizado disponibles, revisar también el aspecto visual.
+- En la revisión visual, comprobar cada página y especialmente que las tablas caben entre márgenes, el texto no queda cortado y los saltos de página no dejan filas o encabezados aislados ni una continuación de una sola fila; si una tabla no cabe completa, mover el inicio de su sección a la página siguiente y volver a renderizar.
 - No confundir validación estructural con revisión visual. Si no se puede renderizar, comunicarlo.
 - Si el índice requiere actualizar los campos en Word, indicar al usuario que seleccione el índice y elija «Actualizar tabla»; no dar por verificadas las páginas calculadas sin renderizado.
 - Confirmar que el archivo existe en la ruta acordada y limpiar únicamente los archivos temporales creados para esta ejecución.

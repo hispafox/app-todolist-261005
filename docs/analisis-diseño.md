@@ -4,7 +4,7 @@ Este documento es la referencia única de producto, análisis y diseño de la ap
 
 ## 1. Objetivo del proyecto
 
-Todo App es una aplicación web educativa para organizar tareas personales, académicas o profesionales. Permite crear, consultar, completar, editar y eliminar tareas, y las conserva en SQLite. El diseño incorpora categorías reutilizables y opcionales para organizar las tareas.
+Todo App es una aplicación web educativa para organizar tareas personales, académicas o profesionales. Permite crear, consultar, completar, editar y eliminar tareas, y las conserva en SQLite. El diseño incorpora categorías reutilizables y opcionales, además de un catálogo local de usuarios que pueden asignarse opcionalmente a las tareas. Estos usuarios son referencias organizativas, no cuentas de acceso.
 
 ## 2. Stack tecnológico
 
@@ -12,6 +12,7 @@ Todo App es una aplicación web educativa para organizar tareas personales, acad
 |---|---|---|
 | .NET / ASP.NET Core | 10 | API REST mediante Minimal API |
 | Entity Framework Core | 10.0.12 | ORM, acceso a datos y migraciones |
+| Serilog.AspNetCore | 10.0.0 | Registro estructurado local del host y las peticiones HTTP |
 | SQLite | — | Base de datos local persistente |
 | React | 19.2.8 | Interfaz web con componentes y hooks |
 | TypeScript | 5.9 | Tipado estático del frontend |
@@ -46,7 +47,7 @@ backend/
     Data/          # DbContext
     Migrations/    # Evolución del esquema
     Models/        # Entidades de dominio
-    Services/      # Lógica de tareas y categorías
+    Services/      # Lógica de tareas, categorías y usuarios
     Program.cs     # Dependencias y endpoints
   TodoApi.Tests/   # Pruebas unitarias
 frontend/
@@ -67,6 +68,8 @@ docs/
 | `CreatedAt` | `DateTime` | Fecha de creación en UTC. |
 | `CategoryId` | `int?` | Clave foránea opcional de la categoría. |
 | `Category` | `TodoCategory?` | Navegación opcional a la categoría. |
+| `UserId` | `int?` | Clave foránea opcional del usuario asignado. |
+| `User` | `TodoUser?` | Navegación opcional al usuario asignado. |
 
 ### `TodoCategory`
 
@@ -78,24 +81,39 @@ docs/
 
 La relación es uno a muchos: una categoría puede tener varias tareas y cada tarea puede no tener categoría o estar asociada a una sola. La clave foránea debe impedir el borrado de una categoría que aún tenga tareas. Una migración debe conservar las tareas ya almacenadas y dejarlas inicialmente sin categoría.
 
+### `TodoUser`
+
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `Id` | `int` | Identificador único del usuario local. |
+| `Name` | `string` | Nombre obligatorio y recortado; se permiten nombres repetidos. |
+| `TodoItems` | `ICollection<TodoItem>` | Tareas asignadas al usuario. |
+
+Un usuario puede tener varias tareas y cada tarea puede no tener usuario o tener uno. La clave foránea impide borrar usuarios con tareas asignadas. La migración conserva las tareas previas sin asignación.
+
 ## 5. Endpoints API REST
 
 La siguiente tabla describe el contrato objetivo del producto. Las rutas de tareas existentes se mantienen y se añaden las de categorías.
 
 | Verbo | Ruta | Descripción | Respuesta OK |
 |---|---|---|---|
-| GET | `/api/todos` | Listar tareas con su categoría si existe. | 200 + array |
-| GET | `/api/todos/{id}` | Obtener una tarea por identificador. | 200 + tarea |
-| POST | `/api/todos` | Crear una tarea; `categoryId` es opcional o `null`. | 201 + tarea |
-| PUT | `/api/todos/{id}` | Editar tarea y asignar, cambiar o quitar su categoría. | 200 + tarea |
+| GET | `/api/todos` | Listar tareas con categoría y usuario asignados si existen. | 200 + array |
+| GET | `/api/todos/{id}` | Obtener una tarea con categoría y usuario asignados si existen. | 200 + tarea |
+| POST | `/api/todos` | Crear una tarea; `categoryId` y `userId` son opcionales o `null`. | 201 + tarea |
+| PUT | `/api/todos/{id}` | Editar tarea y asignar, cambiar o quitar su categoría y usuario. | 200 + tarea |
 | DELETE | `/api/todos/{id}` | Eliminar una tarea. | 204 |
 | GET | `/api/categories` | Listar categorías. | 200 + array |
 | GET | `/api/categories/{id}` | Obtener una categoría por identificador. | 200 + categoría |
 | POST | `/api/categories` | Crear una categoría. | 201 + categoría |
 | PUT | `/api/categories/{id}` | Cambiar el nombre de una categoría. | 200 + categoría |
 | DELETE | `/api/categories/{id}` | Eliminar una categoría sin tareas asociadas. | 204 |
+| GET | `/api/users` | Listar usuarios ordenados por nombre e ID. | 200 + array |
+| GET | `/api/users/{id}` | Obtener un usuario por identificador. | 200 + usuario |
+| POST | `/api/users` | Crear un usuario local. | 201 + usuario |
+| PUT | `/api/users/{id}` | Cambiar el nombre de un usuario. | 200 + usuario |
+| DELETE | `/api/users/{id}` | Eliminar un usuario sin tareas asignadas. | 204 |
 
-Las rutas por identificador devuelven 404 si no existe el recurso. Las entradas inválidas, como un título o nombre vacío o una categoría inexistente, devuelven 400. Los nombres de categoría duplicados y los intentos de borrar categorías en uso devuelven 409. Los errores no deben dejar datos parcialmente modificados.
+Las rutas por identificador devuelven 404 si no existe el recurso. Las entradas inválidas, como un título o nombre vacío o una referencia a categoría/usuario inexistente, devuelven 400. Los nombres de categoría duplicados y los intentos de borrar categorías o usuarios en uso devuelven 409. Los errores no deben dejar datos parcialmente modificados. Los usuarios permiten homónimos y no requieren autenticación.
 
 Ejemplo de creación de tarea:
 
@@ -103,17 +121,21 @@ Ejemplo de creación de tarea:
 {
   "title": "Terminar el proyecto final",
   "isCompleted": false,
-  "categoryId": 1
+  "categoryId": 1,
+  "userId": 4
 }
 ```
 
-`categoryId` puede omitirse o ser `null` para crear una tarea sin categoría.
+`categoryId` y `userId` pueden omitirse o ser `null` para crear una tarea sin categoría o usuario. Las respuestas de tarea incluyen `userId` y `userName`; ambas propiedades son `null` cuando no hay asignación. En PUT, `userId` omitido o `null` desasigna la tarea.
 
 ## 6. Decisiones de diseño
 
 - **Categorías reutilizables como entidad:** permiten mantener un catálogo común y asignar varias tareas a la misma categoría.
 - **Asignación opcional:** no obliga a categorizar cada tarea y permite conservar datos existentes.
 - **Borrado restringido para categorías en uso:** protege la relación y evita eliminar o reasignar tareas de forma implícita.
+- **Catálogo local de usuarios sin autenticación:** permite administrar personas y asignarlas a tareas sin convertirlas en cuentas de acceso.
+- **Asignación opcional y borrado restringido de usuarios en uso:** conserva tareas antiguas y evita cambios implícitos en sus asignaciones.
+- **Nombres de usuario no únicos:** la identidad corresponde al ID; los homónimos se muestran con su ID en los selectores.
 - **Nombre único normalizado:** se recortan espacios exteriores y se evita duplicar nombres por diferencias de mayúsculas; la validación debe ser consistente entre la API y la base de datos.
 - **Sin color, prioridades ni metadatos de categoría en esta iteración:** limita el modelo a la organización solicitada.
 - **SQLite y EF Core:** ofrecen persistencia local sencilla y migraciones sin infraestructura adicional.
@@ -135,31 +157,37 @@ El MVP incluye:
 - crear, consultar, completar, editar y eliminar tareas;
 - asignar o quitar una categoría al crear o editar una tarea;
 - crear, consultar, renombrar y eliminar categorías;
+- crear, consultar, renombrar y eliminar usuarios locales, y asignarlos opcionalmente a tareas;
 - persistencia local con SQLite y consumo mediante API REST;
 - una interfaz React sencilla, legible y adaptable a distintos tamaños de pantalla.
 
-Quedan fuera del MVP la gestión de usuarios y roles, tareas compartidas, categorías avanzadas, prioridades, etiquetas, filtros sofisticados, sincronización externa, notificaciones y despliegue de producción.
+El MVP incluye la gestión del catálogo local de usuarios y la asignación opcional de uno a cada tarea. Quedan fuera las cuentas, autenticación, roles, tareas compartidas, categorías avanzadas, prioridades, etiquetas, filtros sofisticados, sincronización externa, notificaciones y despliegue de producción.
 
 ## 9. Requisitos funcionales
 
 | ID | Requisito | Criterios de aceptación |
 |---|---|---|
 | RF-01 | Crear tareas | Validar un título no vacío; persistirlo y mostrar la nueva tarea sin recargar toda la aplicación. |
-| RF-02 | Consultar tareas | Cargar la lista desde la API y mostrar estado y categoría cuando esté asignada. |
+| RF-02 | Consultar tareas | Cargar la lista desde la API y mostrar estado, categoría y usuario cuando estén asignados. |
 | RF-03 | Completar tareas | Permitir alternar entre pendiente y completada; persistir y reflejar el cambio en la interfaz. |
-| RF-04 | Editar tareas | Guardar cambios de título y categoría, manteniendo el estado y el resto de los datos. |
+| RF-04 | Editar tareas | Guardar cambios de título, categoría y usuario, manteniendo el estado y el resto de los datos. |
 | RF-05 | Eliminar tareas | Eliminar de la base de datos y actualizar la lista visible. |
 | RF-06 | Persistir información | Conservar tareas y categorías entre reinicios y evolucionar el esquema mediante migraciones. |
 | RF-07 | Consumir la API | Usar peticiones HTTP válidas y mostrar errores de red o servidor sin dejar la UI en un estado incoherente. |
-| RF-08 | Validar entradas | Rechazar títulos y nombres vacíos y referencias a categorías inexistentes, con feedback claro. |
+| RF-08 | Validar entradas | Rechazar títulos y nombres vacíos y referencias a categorías o usuarios inexistentes, con feedback claro. |
 | RF-09 | Gestionar categorías | Crear, listar, renombrar y borrar categorías; los nombres son obligatorios y únicos sin distinguir mayúsculas. |
 | RF-10 | Asociar categorías | Permitir que una tarea no tenga categoría o tenga una existente; impedir el borrado de categorías con tareas asociadas. |
+| RF-11 | Gestionar usuarios | Crear, listar, consultar, renombrar y borrar usuarios locales; rechazar nombres vacíos y permitir homónimos. |
+| RF-12 | Asignar usuarios | Asignar, cambiar o quitar un usuario en una tarea; mostrar el nombre asignado y rechazar referencias inexistentes. |
+| RF-13 | Proteger usuarios asignados | Impedir el borrado de usuarios con tareas asignadas sin alterar tareas. |
 
 ## 10. Historias y flujos principales
 
 - **Crear una tarea:** el usuario introduce un título y, opcionalmente, selecciona una categoría; el backend valida y persiste la tarea y la interfaz actualiza la lista.
 - **Completar una tarea:** el usuario cambia su estado; la API persiste el valor y la interfaz refleja el cambio.
 - **Editar una tarea:** el usuario modifica título o categoría; los campos no editados se conservan.
+- **Gestionar usuarios:** el usuario crea, renombra o elimina entradas del catálogo local. Si hay tareas asignadas, el borrado se rechaza y se informa que debe reasignarlas o desasignarlas antes.
+- **Asignar una tarea:** el usuario elige opcionalmente una persona en alta o edición; la aplicación muestra nombre o «Sin asignar» y conserva el ID al completar la tarea.
 - **Eliminar una tarea:** el usuario solicita el borrado y la tarea desaparece tras confirmarse la respuesta del backend.
 - **Organizar tareas:** el usuario crea o renombra categorías y las asigna a tareas. Si intenta borrar una categoría en uso, recibe un mensaje claro y la información permanece intacta.
 - **Gestionar errores:** ante un fallo de red, validación o servidor, la aplicación informa del problema y permite reintentar sin asumir que la operación tuvo éxito.
@@ -173,9 +201,17 @@ Quedan fuera del MVP la gestión de usuarios y roles, tareas compartidas, catego
 - **Fiabilidad:** una operación fallida no debe dejar la interfaz ni las relaciones de datos en un estado inconsistente.
 - **Evolución:** añadir funcionalidades de forma incremental sin romper el flujo CRUD existente.
 
+### Registro del backend y privacidad
+
+El backend emite eventos JSON de una línea por consola mediante Serilog. La lista permitida acepta únicamente los contextos propios `TodoApi.Http` y `TodoApi.Host`; se excluyen eventos de Entity Framework Core y del framework para evitar que diagnósticos filtren SQL, excepciones, rutas locales o payloads. No se registra la excepción completa ni su mensaje.
+
+Los eventos HTTP contienen el método conocido (o `OTHER`), la plantilla de ruta (o `unmatched`), el estado, la duración monotónica, el identificador de traza generado por ASP.NET y el tipo de excepción solo en fallos inesperados. No incluyen URL/Path real, querystring, IDs, nombres, títulos, categorías, cabeceras, cookies, credenciales ni cuerpos. Los errores inesperados devuelven un 500 genérico si la respuesta aún no ha comenzado; las cancelaciones por desconexión no se convierten en errores 500.
+
+La configuración base y la de Development usan nivel Information con niveles prudentes para Microsoft/System. La consola no conserva historial ni rota archivos; no se configura sink de fichero o remoto y no se habilita el registro de datos sensibles de EF Core. Los límites de retención de una eventual captura externa pertenecen al operador.
+
 ## 12. Criterios de éxito y riesgos
 
-El producto cumple su objetivo cuando las operaciones principales de tareas funcionan desde la interfaz, las categorías se pueden administrar y asignar según las reglas indicadas, los datos sobreviven a reinicios y la API devuelve respuestas coherentes.
+El producto cumple su objetivo cuando las operaciones principales de tareas y catálogos (categorías y usuarios) funcionan desde la interfaz, las asignaciones cumplen sus reglas, los datos sobreviven a reinicios y la API devuelve respuestas coherentes.
 
 Riesgos principales:
 
@@ -188,4 +224,4 @@ Se asume un único entorno local de desarrollo, usuarios sin necesidad de autent
 
 ## 13. Evolución prevista
 
-Como posibles siguientes etapas, se pueden añadir filtros por categoría y estado, ordenamiento por fecha, prioridades, autenticación y pruebas de integración. Estas mejoras no forman parte del alcance actual y deben evaluarse antes de incorporarlas.
+Como posibles siguientes etapas, se pueden añadir filtros por categoría, usuario y estado, ordenamiento por fecha, prioridades, autenticación y pruebas de integración. Estas mejoras no forman parte del alcance actual y deben evaluarse antes de incorporarlas.

@@ -55,11 +55,31 @@ namespace TodoApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("TodoItems");
+                });
+
+            modelBuilder.Entity("TodoApi.Models.TodoUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TodoUsers");
                 });
 
             modelBuilder.Entity("TodoApi.Models.TodoItem", b =>
@@ -69,10 +89,22 @@ namespace TodoApi.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("TodoApi.Models.TodoUser", "User")
+                        .WithMany("TodoItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TodoApi.Models.TodoCategory", b =>
+                {
+                    b.Navigation("TodoItems");
+                });
+
+            modelBuilder.Entity("TodoApi.Models.TodoUser", b =>
                 {
                     b.Navigation("TodoItems");
                 });

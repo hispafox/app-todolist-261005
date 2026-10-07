@@ -11,6 +11,7 @@ public class TodoDbContext : DbContext
 
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
     public DbSet<TodoCategory> TodoCategories => Set<TodoCategory>();
+    public DbSet<TodoUser> TodoUsers => Set<TodoUser>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,6 +25,16 @@ public class TodoDbContext : DbContext
             .HasOne(todo => todo.Category)
             .WithMany(category => category.TodoItems)
             .HasForeignKey(todo => todo.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<TodoUser>()
+            .Property(user => user.Name)
+            .IsRequired();
+
+        modelBuilder.Entity<TodoItem>()
+            .HasOne(todo => todo.User)
+            .WithMany(user => user.TodoItems)
+            .HasForeignKey(todo => todo.UserId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

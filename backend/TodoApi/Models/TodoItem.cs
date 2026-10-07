@@ -8,4 +8,6 @@ public class TodoItem
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public int? CategoryId { get; set; }
     public TodoCategory? Category { get; set; }
+    public int? UserId { get; set; }
+    public TodoUser? User { get; set; }
 }

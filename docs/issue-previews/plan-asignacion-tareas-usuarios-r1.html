@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <title>Propuesta de issues · asignación de tareas a usuarios · revisión 1</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #17243b; background: #f3f6fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.6; }
+    main { max-width: 1120px; margin: auto; padding: 36px 24px 60px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.2; margin-bottom: 16px; }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.15rem; margin-bottom: 12px; }
+    code, pre { font-family: ui-monospace, monospace; }
+    code { overflow-wrap: anywhere; }
+    .eyebrow { text-transform: uppercase; font-size: .78rem; font-weight: 750; letter-spacing: .12em; color: #395b98; }
+    .muted { color: #52627a; }
+    .notice { padding: 16px 20px; background: #fff5da; border: 1px solid #ddbb5f; border-radius: 12px; margin: 22px 0; }
+    .stats, .cards { display: grid; gap: 16px; }
+    .stats { grid-template-columns: repeat(3, 1fr); margin-bottom: 32px; }
+    .stat, .card, .panel { background: white; border: 1px solid #d7e0ed; border-radius: 16px; padding: 22px; }
+    .stat strong { display: block; font-size: 2rem; line-height: 1.3; }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 28px; }
+    .card { border-top: 4px solid #426bd6; min-width: 0; }
+    .card.blocked { border-top-color: #b07a08; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .badge { display: inline-block; border-radius: 7px; padding: 3px 9px; font-size: .82rem; font-weight: 650; background: #edf2ff; color: #294a97; }
+    .badge.warning { background: #fff1ca; color: #785100; }
+    .badge.neutral { background: #edf0f4; color: #49566b; }
+    dl { margin: 0 0 18px; }
+    dt { font-size: .78rem; text-transform: uppercase; font-weight: 700; color: #52627a; margin-top: 12px; }
+    dd { margin: 2px 0 0; overflow-wrap: anywhere; }
+    .flow { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0 0 28px; }
+    .flow li { padding: 12px 16px; background: #e9effb; border: 1px solid #c9d7f2; border-radius: 10px; }
+    details { border-top: 1px solid #e1e7f0; padding-top: 14px; }
+    summary { cursor: pointer; color: #294a97; font-weight: 650; }
+    summary:focus-visible { outline: 3px solid #426bd6; outline-offset: 4px; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #f4f6fa; padding: 16px; border-radius: 8px; font-size: .87rem; }
+    .panel { margin-bottom: 20px; }
+    .panel ul { margin-bottom: 0; padding-left: 22px; }
+    footer { border-top: 1px solid #d7e0ed; padding-top: 20px; font-size: .9rem; }
+    @media (max-width: 700px) { .cards, .stats { grid-template-columns: 1fr; } main { padding: 24px 16px; } }
+    @media print { main { max-width: none; } .cards { display: block; } .card { margin-bottom: 16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">GitHub Issue Planner / revisión visual</p>
+      <h1>Asignación de tareas a usuarios</h1>
+      <p class="muted">Propuesta basada en el plan local; no se han publicado issues.</p>
+      <p>Repositorio: <a href="https://github.com/hispafox/app-todolist-261005">hispafox/app-todolist-261005</a><br>Plan: <code>docs/plan-asignacion-tareas-usuarios.md</code><br>Revisión: <strong>r1</strong></p>
+    </header>
+
+    <div class="notice">
+      <strong>Pendiente de aprobación — no publicado en GitHub.</strong><br>
+      Esta vista solo permite revisar la propuesta. Abrirla no publica ni aprueba nada.
+    </div>
+
+    <section class="stats" aria-label="Resumen de la propuesta">
+      <div class="stat"><strong>2</strong>Issues nuevos propuestos para crear</div>
+      <div class="stat"><strong>0</strong>Issues para reutilizar</div>
+      <div class="stat"><strong>1</strong>Issue bloqueado por decisiones pendientes</div>
+    </section>
+
+    <section aria-labelledby="order-title">
+      <h2 id="order-title">Orden de trabajo y dependencias</h2>
+      <ol class="flow">
+        <li><strong>1 · I1</strong> Resolver decisiones del producto · sin dependencias</li>
+        <li><strong>2 · I2</strong> Implementar asignación · depende de I1; bloqueado hasta resolverlo</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="issues-title">
+      <h2 id="issues-title">Issues propuestos</h2>
+      <div class="cards">
+        <article class="card">
+          <p class="eyebrow">I1 / crear</p>
+          <h3>Confirmar las decisiones de producto para asignar tareas a usuarios</h3>
+          <div class="tags">
+            <span class="badge">question — existente verificado</span>
+            <span class="badge neutral">Acción: crear</span>
+          </div>
+          <dl>
+            <dt>Milestone</dt><dd>MVP funcional — existente verificado</dd>
+            <dt>Dependencias</dt><dd>Ninguna. Este issue debe resolverse antes de I2.</dd>
+            <dt>Responsables</dt><dd>No solicitados; no se asignarán personas.</dd>
+          </dl>
+          <details open>
+            <summary>Cuerpo íntegro propuesto (Markdown)</summary>
+            <pre>## Objetivo
+Resolver y documentar las decisiones de producto que determinan el contrato de asignación de usuarios a tareas, sin convertir las recomendaciones del plan en requisitos aprobados.
+
+## Origen
+Plan: `docs/plan-asignacion-tareas-usuarios.md`
+Secciones: “Decisiones pendientes antes de implementar” y paso 1 de “Secuencia propuesta”.
+
+## Alcance
+- Confirmar si la asignación será opcional u obligatoria; si es obligatoria, definir cómo se asignarán las tareas existentes.
+- Confirmar la fuente del selector: un directorio/API existente y su contrato, o un catálogo local mínimo aprobado explícitamente.
+- Confirmar si la asignación se podrá cambiar y quitar desde la edición.
+- Confirmar qué debe ocurrir al eliminar un usuario asignado y si se incorpora una operación de borrado de usuarios.
+- Actualizar `docs/analisis-diseño.md` con las decisiones confirmadas y el contrato resultante.
+
+## Fuera de alcance
+- Implementar modelo, migraciones, API o interfaz.
+- Añadir autenticación, credenciales, roles o gestión de usuarios no aprobada.
+- Tratar las recomendaciones del plan como decisiones ya tomadas.
+
+## Trabajo
+- [ ] Registrar la decisión sobre asignación opcional u obligatoria y el tratamiento de tareas existentes.
+- [ ] Registrar la fuente y el contrato de usuarios, incluyendo si se aprueba un catálogo local y qué operaciones requiere.
+- [ ] Registrar si se puede cambiar/quitar la asignación.
+- [ ] Registrar la política de eliminación de usuarios asignados.
+- [ ] Reflejar las decisiones y los contratos en el análisis y diseño.
+
+## Criterios de aceptación
+- [ ] Las cuatro decisiones quedan resueltas explícitamente; no hay recomendaciones presentadas como acuerdos.
+- [ ] El análisis y diseño refleja la fuente de usuarios, cardinalidad, reglas de asignación y comportamiento de eliminación acordados.
+- [ ] El alcance de implementación de I2 puede ejecutarse sin asumir datos o comportamientos no confirmados.
+
+## Validación
+- Revisar que el análisis actualizado coincide con las decisiones confirmadas y no contradice los requisitos actuales de tareas y categorías.
+
+## Dependencias y decisiones pendientes
+- No tiene dependencias previas. Su resolución desbloquea I2.</pre>
+          </details>
+        </article>
+
+        <article class="card blocked">
+          <p class="eyebrow">I2 / crear / bloqueado</p>
+          <h3>Implementar la asignación de tareas a usuarios de extremo a extremo</h3>
+          <div class="tags">
+            <span class="badge">feature — existente verificado</span>
+            <span class="badge">backend — existente verificado</span>
+            <span class="badge">database — existente verificado</span>
+            <span class="badge">frontend — existente verificado</span>
+            <span class="badge">documentation — existente verificado</span>
+            <span class="badge">testing — existente verificado</span>
+            <span class="badge warning">Bloqueado por decisiones pendientes</span>
+          </div>
+          <dl>
+            <dt>Milestone</dt><dd>MVP funcional — existente verificado</dd>
+            <dt>Dependencias</dt><dd>I1 — requiere que se resuelvan y documenten las decisiones antes de implementar.</dd>
+            <dt>Responsables</dt><dd>No solicitados; no se asignarán personas.</dd>
+          </dl>
+          <details open>
+            <summary>Cuerpo íntegro propuesto (Markdown)</summary>
+            <pre>## Objetivo
+Permitir seleccionar y visualizar el usuario asignado a una tarea, conservar la asignación en SQLite y rechazar referencias a usuarios inexistentes, conforme a las decisiones confirmadas en I1.
+
+## Origen
+Plan: `docs/plan-asignacion-tareas-usuarios.md`
+Secciones: requisitos confirmados, alcance técnico previsto, frontend, documentación y pruebas, y validación prevista.
+
+## Alcance
+- Extender el modelo, la persistencia SQLite/EF Core y la API de tareas con la referencia a usuario, conforme a la opcionalidad y fuente acordadas en I1.
+- Crear la migración necesaria sin perder tareas existentes y aplicando la estrategia acordada para asignaciones existentes.
+- Validar usuarios inexistentes y devolver un error claro; las respuestas de lectura y mutación deben incluir los datos acordados para mostrar la asignación.
+- Cargar las opciones de usuario desde la fuente aprobada, permitir asignar y mostrar al usuario según el contrato final y las decisiones de I1.
+- Implementar cambio o retirada de la asignación y el comportamiento de eliminación de usuarios solo según lo aprobado en I1.
+- Actualizar el análisis/diseño y las pruebas relacionadas.
+
+## Fuera de alcance
+- Autenticación, credenciales, roles o gestión general de usuarios, salvo las operaciones mínimas aprobadas para la fuente del selector.
+- Asignar varios usuarios a una misma tarea.
+- Cambios no relacionados a tareas o categorías.
+
+## Trabajo
+- [ ] Implementar el modelo, la configuración EF Core y la migración preservando las tareas existentes conforme a la decisión de I1.
+- [ ] Extender los contratos y operaciones de la API, incluyendo la validación de existencia y los datos de usuario en las respuestas pertinentes.
+- [ ] Integrar la fuente aprobada y el selector en alta/edición, mostrar la asignación y reflejar errores sin simular un guardado exitoso.
+- [ ] Aplicar las reglas acordadas para cambiar, quitar y eliminar asignaciones/usuarios.
+- [ ] Actualizar documentación y pruebas de backend/API y frontend pertinentes.
+
+## Criterios de aceptación
+- [ ] Una tarea conserva su asignación al guardarse, consultarse y recargar la aplicación; las respuestas reflejan la asignación persistida.
+- [ ] Crear o editar con un identificador de usuario inexistente devuelve un error 400 claro y no persiste cambios parciales.
+- [ ] Las tareas existentes y las operaciones actuales de tareas y categorías siguen funcionando según las decisiones aprobadas.
+- [ ] La interfaz permite seleccionar y visualizar el usuario; las acciones de cambio/retirada coinciden con el contrato aprobado.
+- [ ] Las reglas de eliminación acordadas protegen las tareas asignadas sin borrados o reasignaciones implícitas.
+- [ ] Las pruebas dirigidas y la compilación de producción del frontend pasan.
+
+## Validación
+- Probar persistencia y lectura de una tarea asignada; probar usuario inexistente al crear y editar sin cambios parciales.
+- Probar migración sobre tareas existentes y el comportamiento de cambiar, quitar o eliminar asignaciones que se haya aprobado.
+- Verificar que completar/eliminar tareas y las operaciones de categorías no pierden ni alteran asignaciones de forma inesperada.
+- Verificar carga/visualización del selector, feedback de fallos y build de producción de Vite/TypeScript.
+
+## Dependencias y decisiones pendientes
+- Depende de I1. No iniciar hasta que se confirmen la opcionalidad, la fuente de usuarios, la edición/retirada y la política de eliminación.
+- No se deben asumir recomendaciones del plan como decisiones tomadas.</pre>
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="metadata-title">
+      <h2 id="metadata-title">Metadatos verificados</h2>
+      <p>Las labels y milestones siguientes se consultaron en GitHub. No se proponen metadatos nuevos.</p>
+      <ul>
+        <li>I1: label <code>question</code> — existente verificado; milestone <code>MVP funcional</code> — abierto y existente verificado.</li>
+        <li>I2: labels <code>feature</code>, <code>backend</code>, <code>database</code>, <code>frontend</code>, <code>documentation</code> y <code>testing</code> — existentes verificadas; milestone <code>MVP funcional</code> — abierto y existente verificado.</li>
+        <li>Responsables: no solicitados; no se asignarán personas.</li>
+        <li>No se encontró un issue duplicado. Los issues existentes de categorías (#9 y #10) son relacionados, pero no cubren asignaciones de usuarios.</li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="pending-title">
+      <h2 id="pending-title">Decisiones y bloqueos</h2>
+      <ul>
+        <li>El plan no decide si la asignación es opcional u obligatoria.</li>
+        <li>El plan no determina la fuente de usuarios ni aprueba crear un catálogo local.</li>
+        <li>El cambio/retirada de una asignación y la eliminación de usuarios asignados requieren confirmación.</li>
+        <li>I2 queda bloqueado hasta resolver estas decisiones en I1. La propuesta no presupone ninguna recomendación.</li>
+      </ul>
+    </section>
+    <footer class="muted">Artefacto local de revisión, revisión r1. No es un comprobante de publicación. No se ha implementado el plan ni modificado código.</footer>
+  </main>
+</body>
+</html>
