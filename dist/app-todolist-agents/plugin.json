@@ -1,0 +1,13 @@
+{
+  "name": "app-todolist-agents",
+  "version": "0.1.0",
+  "description": "Equipo de agentes y skills para desarrollar la app de tareas (.NET 10 + ASP.NET Core + EF Core + SQLite + React + TypeScript): planificar, implementar, verificar, hacer QA y documentar por capas.",
+  "author": {
+    "name": "hispafox"
+  },
+  "repository": "https://github.com/hispafox/app-todolist-261005",
+  "license": "MIT",
+  "keywords": ["dotnet", "aspnetcore", "efcore", "sqlite", "react", "typescript", "agents", "skills", "todolist"],
+  "agents": "agents/",
+  "skills": "skills/"
+}
