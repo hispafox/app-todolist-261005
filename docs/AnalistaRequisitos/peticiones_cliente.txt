@@ -1,0 +1,37 @@
+PETICIONES DEL CLIENTE — Ferretería Robledo, S.L.
+==================================================
+Recopiladas de llamadas, mensajes de WhatsApp, correos sueltos y notas tomadas en la visita del 6 de octubre.
+Sin ordenar, sin priorizar y sin quitar duplicados. Algunas se contradicen entre sí: están tal cual las dijeron.
+
+- Que cuando un producto baje del stock mínimo avise. Da igual si por correo o en la pantalla principal, pero que avise. (Javier, WhatsApp)
+- Marisa quiere ver desde el móvil cuánto se ha vendido hoy sin tener que llamar a la tienda.
+- La facturación tiene que cumplir con lo que pide Hacienda ahora mismo (Verifactu). Lucía insiste en que esto es obligatorio, no opcional.
+- Los albaranes de los proveedores llegan en PDF por correo. Quieren que se carguen solos en el sistema y no tener que picarlos a mano. Son unos 15-20 albaranes a la semana.
+- Que se pueda vender sin stock. A veces el camión llega por la tarde y el producto ya se ha vendido por la mañana. (Marisa)
+- Javier dice que no, que no se venda nada que no esté físicamente en el almacén, que luego hay líos con los clientes.
+- Dos ubicaciones: la nave de Alcalá y la tienda de la calle Mayor. Stock separado por ubicación, pero poder verlo todo junto en una pantalla.
+- Leer códigos de barras con pistola en el mostrador. Las pistolas que tienen son USB y no quieren comprar otras.
+- Precios especiales por cliente. Los habituales tienen entre un 10 % y un 15 % de descuento según la familia, y ahora mismo eso lo lleva cada uno "de cabeza".
+- Que no sea como el programa de antes, que había que hacer seis clics para cobrar una cosa.
+- Historial de precios de compra por proveedor para poder negociar con datos.
+- Exportar a Excel. Todo. Siempre. (Lucía lo repitió tres veces)
+- Tienen una tienda online en Prestashop que casi no usan, pero si la retoman quieren que el stock sea el mismo que el de la tienda física.
+- Devoluciones y abonos, que ahora se hacen "a mano con un papel".
+- Fichas de producto con foto, porque hay dos chicos nuevos en el mostrador que no distinguen una referencia de otra.
+- Usuarios y permisos: Marisa lo ve todo, Javier solo almacén y compras, Lucía facturación y cobros, los dos del mostrador solo vender.
+- Que funcione aunque se caiga internet. En la nave se cae la línea con cierta frecuencia y no pueden dejar de cobrar.
+- Copias de seguridad automáticas. "Que no vuelva a pasar lo de 2023." (No han contado qué pasó en 2023.)
+- Que avise de los productos que llevan más de seis meses sin venderse.
+- Imprimir etiquetas de estantería con el precio y el código de barras.
+- Hacer presupuestos a clientes que luego se conviertan en pedido y en factura sin volver a teclear nada.
+- Pedido automático al proveedor cuando se baje del mínimo. (Javier)
+- "Yo quiero revisar cualquier pedido antes de que salga, que luego llegan cosas que no hacen falta." (Marisa, en la misma conversación)
+- Dar de alta productos nuevos rápido desde el móvil cuando llega un pedido con referencias que no tenían.
+- Algunos clientes son autónomos en recargo de equivalencia y la factura tiene que sacarlo bien. Ahora lo calculan aparte.
+- Pantalla táctil en el mostrador, si puede ser.
+- Un informe de ventas mensual por familia para el gestor, que ahora Lucía monta a mano cada mes en Excel.
+- Marisa comentó algo de un chat con IA en la web para que los clientes pregunten si hay stock de algo. No quedó claro si lo quiere ahora o "más adelante".
+- Plazo: lo quieren funcionando en enero, antes del inventario anual.
+- Presupuesto: no lo han dicho. Cuando se les preguntó, Marisa dijo "primero dime qué me vais a hacer".
+- Lucía pregunta si va a tener que seguir usando el programa de contabilidad del gestor o si "esto lo sustituye". No está claro qué programa usa el gestor.
+- Que los descuentos no los pueda tocar cualquiera. Solo Marisa y Lucía.

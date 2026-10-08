@@ -1,0 +1,42 @@
+De: Pedro
+Para: Marisa Robledo <marisa.robledo@ferreteria-robledo.example>
+CC: Javier Ortega <javier.ortega@ferreteria-robledo.example>; Lucía Carvajal <lucia.carvajal@ferreteria-robledo.example>; Marta Gil
+Fecha: martes, 7 de octubre de 2026, 9:40
+Asunto: Proyecto Robledo — Resumen de la reunión del lunes 6 y próximos pasos
+
+Hola Marisa,
+
+Te comparto lo que nos llevamos de la reunión del lunes en la nave, para que lo revises con Javier y Lucía y me digas si me he dejado algo o he entendido algo al revés.
+
+Quiénes estuvimos: Marisa, Javier y Lucía por vuestra parte; Marta y yo por la nuestra. Dos horas, de 10:00 a 12:00.
+
+Lo que vimos
+
+El punto de partida es claro: hoy el stock vive en dos Excel (uno por ubicación), las ventas se cobran con el programa antiguo que nadie quiere seguir usando, y la facturación y los albaranes de proveedor se hacen a mano. Lucía nos enseñó el informe mensual que prepara para el gestor y el cálculo aparte del recargo de equivalencia. Javier nos pasó al terminar la exportación del listado de productos de la nave, que ya tenemos.
+
+Lo que quedó acordado
+
+- La aplicación arranca con tres bloques: stock por ubicación (nave y tienda), venta en mostrador con lectura de código de barras con las pistolas USB que ya tenéis, y facturación cumpliendo los requisitos de Hacienda.
+- Los albaranes en PDF, la conexión con la tienda online y el informe mensual para el gestor quedan para una segunda fase, una vez el día a día funcione.
+- Lo del asistente con IA para consultar stock desde la web se aparca. Lo retomamos cuando lo anterior esté en marcha.
+- Perfiles de usuario tal y como los describió Marisa: ella con acceso completo, Javier almacén y compras, Lucía facturación y cobros, y el mostrador solo venta. Los descuentos solo los tocan Marisa y Lucía.
+- Fecha objetivo: tenerlo funcionando antes del inventario de enero.
+
+Lo que queda por decidir (y necesito que lo cerréis entre vosotros)
+
+- Vender sin stock. Marisa lo quiere permitir; Javier prefiere que no. Afecta a cómo se diseña la venta, así que necesito una única respuesta.
+- Pedidos a proveedor. Javier quiere que salgan solos al bajar del mínimo; Marisa quiere revisarlos antes. Se pueden combinar (propuesta automática, salida manual), pero prefiero que lo decidáis vosotros.
+- Qué pasó con los datos en 2023. No para reabrir heridas: para saber qué tipo de copia de seguridad necesitáis de verdad.
+
+Próximos pasos
+
+- Nosotros: propuesta de alcance y plazos de la primera fase, antes del viernes 17 de octubre.
+- Vosotros: respuesta a los tres puntos pendientes y el listado de clientes en recargo de equivalencia, si puede ser para la misma fecha.
+- Nueva reunión: te propongo el martes 21 de octubre a las 10:00 en la nave para repasar la propuesta. Si no os encaja, dime dos huecos esa semana.
+
+Si alguno de los tres puntos pendientes os lleva más tiempo del que parece, me llamas y lo vemos en quince minutos.
+
+Un saludo,
+
+Pedro
+Consultor — Proyecto Robledo

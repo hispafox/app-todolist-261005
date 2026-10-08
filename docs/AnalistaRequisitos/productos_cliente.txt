@@ -1,0 +1,54 @@
+LISTADO DE PRODUCTOS
+=====================
+Cliente: Ferretería Robledo, S.L.
+Origen: exportación del Excel del almacén (nave de Alcalá de Henares), 06/10/2026
+Enviado por: Javier Ortega (responsable de almacén)
+
+Formato de cada línea:
+Referencia | Descripción | Familia | Proveedor | Precio compra (EUR) | PVP sin IVA (EUR) | Stock | Stock mínimo | Observaciones
+
+FR-0001 | Taladro percutor a batería 18V con 2 baterías y maletín | Herramienta eléctrica | Hispano Tools | 98,40 | 159,90 | 7 | 3 |
+FR-0002 | Amoladora angular 125 mm 900 W | Herramienta eléctrica | Hispano Tools | 41,00 | 69,95 | 12 | 4 |
+FR-0003 | Sierra de calar 650 W con maletín | Herramienta eléctrica | Hispano Tools | 52,30 | 89,00 | 4 | 3 |
+FR-0004 | Atornillador de impacto 18V (solo máquina) | Herramienta eléctrica | Hispano Tools | 61,00 | 99,90 | 5 | 2 | Comparte batería con FR-0001
+FR-0010 | Juego de llaves combinadas 8-22 mm (12 piezas) | Herramienta manual | Distribuciones Arquero | 18,75 | 34,50 | 23 | 10 |
+FR-0011 | Destornillador punta cruz PH2 mango bimaterial | Herramienta manual | Distribuciones Arquero | 1,90 | 4,20 | 140 | 50 |
+FR-0012 | Martillo de carpintero 450 g mango de fibra | Herramienta manual | Distribuciones Arquero | 7,10 | 13,95 | 31 | 10 |
+FR-0013 | Alicate universal 180 mm aislado 1000 V | Herramienta manual | Distribuciones Arquero | 9,60 | 18,90 | 18 | 8 |
+FR-0014 | Llave inglesa 250 mm | Herramienta manual | Distribuciones Arquero | 6,40 | 12,50 | 20 | 8 |
+FR-0020 | Tornillo rosca madera 4x40 mm (caja 200 ud) | Tornillería | Metalúrgica del Henares | 3,20 | 6,50 | 85 | 30 |
+FR-0021 | Tornillo rosca madera 5x60 mm (caja 200 ud) | Tornillería | Metalúrgica del Henares | 4,80 | 9,40 | 60 | 30 |
+FR-0022 | Taco de nylon 8 mm (bolsa 100 ud) | Tornillería | Metalúrgica del Henares | 1,45 | 3,60 | 210 | 80 |
+FR-0023 | Tornillo métrico M8x50 DIN 933 zincado (caja 100 ud) | Tornillería | Metalúrgica del Henares | 6,90 | 13,20 | 42 | 20 |
+FR-0024 | Tuerca M8 DIN 934 zincada (caja 100 ud) | Tornillería | Metalúrgica del Henares | 2,10 | 4,50 | 0 | 20 | Rotura de stock. Pedido al proveedor el 03/10
+FR-0025 | Arandela plana M8 DIN 125 (caja 200 ud) | Tornillería | Metalúrgica del Henares | 1,80 | 3,90 | 55 | 20 |
+FR-0030 | Disco de corte metal 125x1,0 mm (pack 10 ud) | Abrasivos | Abrasivos Norte | 5,40 | 11,90 | 27 | 15 |
+FR-0031 | Disco de desbaste 125x6 mm | Abrasivos | Abrasivos Norte | 1,30 | 2,95 | 64 | 20 |
+FR-0032 | Lija grano 120 rollo 5 m | Abrasivos | Abrasivos Norte | 2,80 | 5,75 | 19 | 10 |
+FR-0033 | Disco de corte metal 230x2,0 mm | Abrasivos | Abrasivos Norte | 1,95 | 4,30 | 8 | 10 | Por debajo del mínimo
+FR-0040 | Silicona neutra transparente 280 ml | Química | Químicos Lorca | 2,35 | 5,20 | 72 | 24 |
+FR-0041 | Espuma de poliuretano 750 ml para pistola | Química | Químicos Lorca | 3,90 | 7,95 | 38 | 12 |
+FR-0042 | Desengrasante industrial 5 L | Química | Químicos Lorca | 8,20 | 15,90 | 11 | 6 |
+FR-0043 | Pintura antioxidante gris 750 ml | Química | Químicos Lorca | 6,75 | 12,40 | 9 | 6 | Precio de compra sin actualizar desde 2024
+FR-0044 | Aflojatodo spray 400 ml | Química | Químicos Lorca | 2,10 | 4,95 | 47 | 15 |
+FR-0050 | Guantes de nitrilo talla 9 (caja 100 ud) | EPI | Distribuciones Arquero | 5,60 | 10,90 | 44 | 20 |
+FR-0051 | Gafas de protección policarbonato | EPI | Distribuciones Arquero | 1,75 | 3,95 | 95 | 30 |
+FR-0052 | Casco de obra blanco EN 397 | EPI | Distribuciones Arquero | 4,30 | 8,90 | 16 | 10 |
+FR-0053 | Mascarilla FFP2 (caja 20 ud) | EPI | Distribuciones Arquero | 7,80 | 14,50 | 3 | 15 | Por debajo del mínimo
+FR-0054 | Bota de seguridad S3 talla 42 | EPI | Distribuciones Arquero | 24,00 | 42,90 | 6 | 2 | Hay tallas 40-45 en otras referencias no exportadas
+FR-0060 | Cinta métrica 5 m | Medición | Hispano Tools | 2,40 | 5,50 | 57 | 20 |
+FR-0061 | Nivel de burbuja aluminio 60 cm | Medición | Hispano Tools | 6,10 | 12,90 | 14 | 6 |
+FR-0062 | Medidor láser 40 m | Medición | Hispano Tools | 24,00 | 44,90 | 5 | 2 |
+FR-0070 | Cable eléctrico H07V-K 2,5 mm2 azul (rollo 100 m) | Electricidad | Metalúrgica del Henares | 31,00 | 52,00 | 8 | 4 |
+FR-0071 | Cinta aislante 19 mm negra | Electricidad | Metalúrgica del Henares | 0,55 | 1,30 | 180 | 60 |
+FR-0072 | Regleta 4 tomas con interruptor | Electricidad | Hispano Tools | 4,90 | 9,95 | 22 | 10 |
+FR-0073 | Bombilla LED E27 9 W luz cálida | Electricidad | Hispano Tools | 1,20 | 2,80 | 130 | 40 |
+FR-0080 | Carretilla de obra 90 L | Varios | Distribuciones Arquero | 38,00 | 64,90 | 2 | 2 | Descatalogada por el proveedor, no reponer
+FR-0081 | Escalera de aluminio 5 peldaños | Varios | Distribuciones Arquero | 29,50 | 54,90 | 3 | 1 |
+FR-0082 | Cubo de goma 12 L | Varios | Distribuciones Arquero | 2,60 | 5,90 | 25 | 10 |
+
+Notas del listado:
+- Los precios de venta son sin IVA. Todos los artículos van al 21 %.
+- El stock es solo el del almacén de la nave. La tienda de la calle Mayor lleva su propio Excel y no está incluida aquí.
+- "Stock mínimo" es el punto en el que Javier suele hacer pedido al proveedor, pero no está revisado desde hace tiempo.
+- Las referencias con hueco en la numeración (FR-0005 a FR-0009, etc.) son familias que se dejaron reservadas y nunca se usaron.
