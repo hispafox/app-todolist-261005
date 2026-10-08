@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
+using Scalar.AspNetCore;
 using TodoApi.Data;
 using TodoApi.Dtos;
 using TodoApi.Models;
@@ -326,6 +327,7 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.MapOpenApi();
+        app.MapScalarApiReference();
     }
 
     await app.RunAsync();
